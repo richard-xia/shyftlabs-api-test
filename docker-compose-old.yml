@@ -1,0 +1,33 @@
+version: "2"
+services:
+  postgres:
+    image: postgres:10.3
+    restart: unless-stopped
+    container_name: postgres
+    hostname: postgres
+    environment:
+      - POSTGRES_USER=sammy
+      - POSTGRES_PASSWORD=your_password
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  shyftlabs-api:
+    depends_on:
+      - postgres
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    restart: always
+  prisma-studio:
+    container_name: prisma-studio
+    image: timothyjmiller/prisma-studio:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "5555:5555"
+volumes:
+  postgres:
