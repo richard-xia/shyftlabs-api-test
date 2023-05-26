@@ -7,8 +7,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: sammy
-      POSTGRES_PASSWORD: your_password
+      POSTGRES_USER: richard
+      POSTGRES_PASSWORD: graphql
       POSTGRES_DB: mydb
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -25,15 +25,5 @@ services:
       - "4000:4000"
     restart: always
 
-  prisma-studio:
-    container_name: prisma-studio
-    image: timothyjmiller/prisma-studio:latest
-    restart: unless-stopped
-    env_file:
-      - .env
-    ports:
-      - "5555:5555"
-
 volumes:
   postgres-data:
-  # pgadmin-data:
